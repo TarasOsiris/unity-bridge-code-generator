@@ -3,6 +3,7 @@ using System.CodeDom;
 using UnityEditor;
 using System.CodeDom.Compiler;
 using System.IO;
+using Google.Developers;
 
 namespace BridgeGenerator.Editor
 {
@@ -27,10 +28,12 @@ namespace BridgeGenerator.Editor
         {
             targetUnit = new CodeCompileUnit();
             var codeNamespace = new CodeNamespace("GeneratedBridge");
+            codeNamespace.Imports.Add(new CodeNamespaceImport("Google.Developers"));
 
             targetClass = new CodeTypeDeclaration("UnityAndroidBridge");
             targetClass.IsClass = true;
             targetClass.TypeAttributes = System.Reflection.TypeAttributes.Public | System.Reflection.TypeAttributes.Sealed;
+            targetClass.BaseTypes.Add(typeof(JavaObjWrapper));
             codeNamespace.Types.Add(targetClass);
             targetUnit.Namespaces.Add(codeNamespace);
         }

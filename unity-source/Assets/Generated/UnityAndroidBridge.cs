@@ -10,9 +10,10 @@
 
 namespace GeneratedBridge
 {
+    using Google.Developers;
     
     
-    public sealed class UnityAndroidBridge
+    public sealed class UnityAndroidBridge : JavaObjWrapper
     {
     }
 }
