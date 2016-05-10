@@ -12,7 +12,7 @@ namespace GeneratedBridge
 {
     
     
-    public sealed class AndroidBridge
+    public sealed class UnityAndroidBridge
     {
     }
 }

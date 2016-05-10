@@ -4,11 +4,11 @@ using UnityEditor;
 using System.CodeDom.Compiler;
 using System.IO;
 
-namespace Editor.BridgeGenerator
+namespace BridgeGenerator.Editor
 {
     public class AndroidBridgeClassGenerator
     {
-        private const string OutputFileName = "AndroidBridge.cs";
+        private const string OutputFileName = "UnityAndroidBridge.cs";
 
         CodeCompileUnit targetUnit;
         CodeTypeDeclaration targetClass;
@@ -28,7 +28,7 @@ namespace Editor.BridgeGenerator
             targetUnit = new CodeCompileUnit();
             var codeNamespace = new CodeNamespace("GeneratedBridge");
 
-            targetClass = new CodeTypeDeclaration("AndroidBridge");
+            targetClass = new CodeTypeDeclaration("UnityAndroidBridge");
             targetClass.IsClass = true;
             targetClass.TypeAttributes = System.Reflection.TypeAttributes.Public | System.Reflection.TypeAttributes.Sealed;
             codeNamespace.Types.Add(targetClass);
