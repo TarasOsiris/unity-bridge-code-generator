@@ -13,6 +13,9 @@ namespace BridgeGenerator.Editor
 
         private const string AndroidJavaObjFieldName = "_bridgeAndroidJavaObject";
 
+        // TODO To be passed from parsed java class
+        private const string BridgeJavaClassName = "unitybridge.tarasleskiv.com.androidsource.unity.UnityAndroidBridge";
+
         CodeCompileUnit targetUnit;
         CodeTypeDeclaration targetClass;
 
@@ -55,9 +58,15 @@ namespace BridgeGenerator.Editor
 
         public void AddConstructor()
         {
-            CodeConstructor constructor = new CodeConstructor();
+            var constructor = new CodeConstructor();
             constructor.Attributes = MemberAttributes.Public | MemberAttributes.Final;
 
+            var javaObjRef = new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), AndroidJavaObjFieldName);
+            var createObj = new CodeObjectCreateExpression(new CodeTypeReference(typeof(AndroidJavaObject)), 
+                new CodePrimitiveExpression(BridgeJavaClassName));
+            CodeStatement assignment = new CodeAssignStatement(javaObjRef, createObj);
+
+            constructor.Statements.Add(assignment);
             targetClass.Members.Add(constructor);
         }
 
