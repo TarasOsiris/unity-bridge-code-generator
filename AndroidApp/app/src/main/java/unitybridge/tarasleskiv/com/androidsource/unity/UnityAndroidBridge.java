@@ -12,4 +12,6 @@ public class UnityAndroidBridge {
 	public UnityAndroidBridge() {
 		Log.d(TAG, "UnityAndroidBridge constructor without params");
 	}
+
+
 }

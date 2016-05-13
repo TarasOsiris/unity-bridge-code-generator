@@ -28,3 +28,6 @@ unity-source/Library
 unity-source/Temp
 AndroidApp/.idea
 unity-source/obj
+
+### Gradle ###
+.gradle
