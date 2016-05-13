@@ -31,3 +31,5 @@ unity-source/obj
 
 ### Gradle ###
 .gradle
+.idea
+*.iml

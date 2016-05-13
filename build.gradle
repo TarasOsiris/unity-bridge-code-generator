@@ -1,0 +1,28 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    println main.output.classesDir
+}
+
+dependencies {
+    compile group: 'com.google.code.javaparser', name: 'javaparser', version: '1.0.11'
+}
+
+task parseJavaBridgeFile(type:JavaExec) {
+    main = 'com.leskiv.taras.bridgeparser.JavaBridgeParser'
+    classpath = sourceSets.main.runtimeClasspath
+    args 'hello'
+}
+
+task printData << {
+    println "Testing..."
+
+    sourceSets.all {
+        println name
+    }
+}
+
