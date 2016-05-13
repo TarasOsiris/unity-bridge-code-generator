@@ -6,10 +6,9 @@ package com.leskiv.taras.bridgeparser;
 import japa.parser.JavaParser;
 import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
-import japa.parser.ast.body.ClassOrInterfaceDeclaration;
-import japa.parser.ast.body.MethodDeclaration;
-import japa.parser.ast.body.Parameter;
-import japa.parser.ast.expr.AnnotationExpr;
+import japa.parser.ast.body.*;
+import japa.parser.ast.expr.*;
+import japa.parser.ast.visitor.DumpVisitor;
 import japa.parser.ast.visitor.VoidVisitorAdapter;
 
 import java.io.FileInputStream;
@@ -33,6 +32,7 @@ public class JavaBridgeParser {
 
 		// visit and print the methods names
 		new MethodVisitor().visit(cu, null);
+
 	}
 
 	/**
@@ -88,12 +88,50 @@ public class JavaBridgeParser {
 			if(annotations != null)
 			{
 				System.out.println("CLASS ANNOTATIONS: \n");
-				for (AnnotationExpr annotation : annotations)
+				for (AnnotationExpr annotationExpr : annotations)
 				{
-					System.out.println("annotation: " + annotation.toString() + "\n");
-					System.out.println("annotation: " + annotation.getName() + "\n");
+					System.out.println("annotationExpr: " + annotationExpr.toString() + "\n");
+					System.out.println("annotationExpr: " + annotationExpr.getName() + "\n");
 				}
 			}
+
+			super.visit(n, arg);
+		}
+
+		@Override
+		public void visit(MarkerAnnotationExpr n, Object arg) {
+			System.out.println(">>> MarkerAnnotationExpr " + n.getName());
+			super.visit(n, arg);
+		}
+
+		@Override
+		public void visit(SingleMemberAnnotationExpr n, Object arg) {
+			System.out.println(">>> SingleMemberAnnotationExpr " + n.getName());
+			super.visit(n, arg);
+		}
+
+		@Override
+		public void visit(NormalAnnotationExpr n, Object arg) {
+			System.out.println(">>> NormalAnnotationExpr " + n.getName());
+			for (MemberValuePair vp : n.getPairs())
+			{
+				System.out.println("\t>>> NormalAnnotationExpr " + vp.toString());
+				System.out.println("\t>>> NormalAnnotationExpr " + vp.getName());
+				System.out.println("\t>>> NormalAnnotationExpr " + vp.getValue());
+			}
+			super.visit(n, arg);
+		}
+
+		@Override
+		public void visit(AnnotationMemberDeclaration n, Object arg) {
+			System.out.println(">>> AnnotationMemberDeclaration " + n.getName());
+
+			super.visit(n, arg);
+		}
+
+		@Override
+		public void visit(AnnotationDeclaration n, Object arg) {
+			System.out.println(">>> AnnotationDeclaration " + n.getName());
 
 			super.visit(n, arg);
 		}
