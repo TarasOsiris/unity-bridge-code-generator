@@ -55,18 +55,15 @@ public class JavaBridgeParser {
 			System.out.println("return type: " + n.getType() + "\n");
 
 			List<AnnotationExpr> annotations = n.getAnnotations();
-			if(annotations != null)
-			{
+			if (annotations != null) {
 				System.out.println("ANNOTATIONS: \n");
-				for (AnnotationExpr annotation : annotations)
-				{
+				for (AnnotationExpr annotation : annotations) {
 					System.out.println("annotation: " + annotation.toString() + "\n");
 					System.out.println("annotation: " + annotation.getName() + "\n");
 				}
 			}
 
-			if (n.getParameters() != null)
-			{
+			if (n.getParameters() != null) {
 				System.out.println("PARAM: \n");
 				for (Parameter param : n.getParameters()) {
 					System.out.println("param: " + param.toString() + "\n");
@@ -85,53 +82,23 @@ public class JavaBridgeParser {
 			System.out.println("CLASS: " + n.getName() + "\n");
 
 			List<AnnotationExpr> annotations = n.getAnnotations();
-			if(annotations != null)
-			{
+			if (annotations != null) {
 				System.out.println("CLASS ANNOTATIONS: \n");
-				for (AnnotationExpr annotationExpr : annotations)
-				{
+				for (AnnotationExpr annotationExpr : annotations) {
 					System.out.println("annotationExpr: " + annotationExpr.toString() + "\n");
 					System.out.println("annotationExpr: " + annotationExpr.getName() + "\n");
+
+					if (annotationExpr instanceof NormalAnnotationExpr) {
+						NormalAnnotationExpr nae = (NormalAnnotationExpr) annotationExpr;
+
+						for (MemberValuePair vp : nae.getPairs()) {
+							System.out.println("\t>>> NormalAnnotationExpr " + vp.toString());
+							System.out.println("\t>>> NormalAnnotationExpr " + vp.getName());
+							System.out.println("\t>>> NormalAnnotationExpr " + vp.getValue());
+						}
+					}
 				}
 			}
-
-			super.visit(n, arg);
-		}
-
-		@Override
-		public void visit(MarkerAnnotationExpr n, Object arg) {
-			System.out.println(">>> MarkerAnnotationExpr " + n.getName());
-			super.visit(n, arg);
-		}
-
-		@Override
-		public void visit(SingleMemberAnnotationExpr n, Object arg) {
-			System.out.println(">>> SingleMemberAnnotationExpr " + n.getName());
-			super.visit(n, arg);
-		}
-
-		@Override
-		public void visit(NormalAnnotationExpr n, Object arg) {
-			System.out.println(">>> NormalAnnotationExpr " + n.getName());
-			for (MemberValuePair vp : n.getPairs())
-			{
-				System.out.println("\t>>> NormalAnnotationExpr " + vp.toString());
-				System.out.println("\t>>> NormalAnnotationExpr " + vp.getName());
-				System.out.println("\t>>> NormalAnnotationExpr " + vp.getValue());
-			}
-			super.visit(n, arg);
-		}
-
-		@Override
-		public void visit(AnnotationMemberDeclaration n, Object arg) {
-			System.out.println(">>> AnnotationMemberDeclaration " + n.getName());
-
-			super.visit(n, arg);
-		}
-
-		@Override
-		public void visit(AnnotationDeclaration n, Object arg) {
-			System.out.println(">>> AnnotationDeclaration " + n.getName());
 
 			super.visit(n, arg);
 		}
