@@ -3,18 +3,99 @@
  */
 package com.leskiv.taras.bridgeparser;
 
+import japa.parser.JavaParser;
+import japa.parser.ParseException;
 import japa.parser.ast.CompilationUnit;
+import japa.parser.ast.body.ClassOrInterfaceDeclaration;
+import japa.parser.ast.body.MethodDeclaration;
+import japa.parser.ast.body.Parameter;
+import japa.parser.ast.expr.AnnotationExpr;
+import japa.parser.ast.visitor.VoidVisitorAdapter;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.util.List;
 
 public class JavaBridgeParser {
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException, ParseException {
 		System.out.println("app is running! " + args[0]);
 
 		FileInputStream in = new FileInputStream("/Users/tarasleskiv/dev/repo/gs/unity-bridge-code-generator/AndroidApp/app/src/main/java/unitybridge/tarasleskiv/com/androidsource/unity/UnityAndroidBridge.java");
 
 		CompilationUnit cu;
+		try {
+			// parse the file
+			cu = JavaParser.parse(in);
+		} finally {
+			in.close();
+		}
 
+		// visit and print the methods names
+		new MethodVisitor().visit(cu, null);
+	}
+
+	/**
+	 * Simple visitor implementation for visiting MethodDeclaration nodes.
+	 */
+	private static class MethodVisitor extends VoidVisitorAdapter {
+
+		@Override
+		public void visit(MethodDeclaration n, Object arg) {
+			// here you can access the attributes of the method.
+			// this method will be called for all methods in this
+			// CompilationUnit, including inner class methods
+
+			System.out.println("arg: " + arg + "\n");
+
+
+			System.out.println("name: " + n.getName() + "\n");
+			System.out.println("body: " + n.getBody() + "\n");
+			System.out.println("return type: " + n.getType() + "\n");
+			System.out.println("return type: " + n.getType() + "\n");
+
+			List<AnnotationExpr> annotations = n.getAnnotations();
+			if(annotations != null)
+			{
+				System.out.println("ANNOTATIONS: \n");
+				for (AnnotationExpr annotation : annotations)
+				{
+					System.out.println("annotation: " + annotation.toString() + "\n");
+					System.out.println("annotation: " + annotation.getName() + "\n");
+				}
+			}
+
+			if (n.getParameters() != null)
+			{
+				System.out.println("PARAM: \n");
+				for (Parameter param : n.getParameters()) {
+					System.out.println("param: " + param.toString() + "\n");
+					System.out.println("param type: " + param.getType() + "\n");
+					System.out.println("param name: " + param.getId() + "\n");
+					System.out.println("param name: " + param.getId() + "\n");
+				}
+			}
+			System.out.println("============================================================");
+			super.visit(n, arg);
+		}
+
+
+		@Override
+		public void visit(ClassOrInterfaceDeclaration n, Object arg) {
+			System.out.println("CLASS: " + n.getName() + "\n");
+
+			List<AnnotationExpr> annotations = n.getAnnotations();
+			if(annotations != null)
+			{
+				System.out.println("CLASS ANNOTATIONS: \n");
+				for (AnnotationExpr annotation : annotations)
+				{
+					System.out.println("annotation: " + annotation.toString() + "\n");
+					System.out.println("annotation: " + annotation.getName() + "\n");
+				}
+			}
+
+			super.visit(n, arg);
+		}
 	}
 }
