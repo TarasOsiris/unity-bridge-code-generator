@@ -11,6 +11,8 @@ namespace BridgeGenerator.Editor
     {
         private const string OutputFileName = "UnityAndroidBridge.cs";
 
+        private const string AndroidJavaObjFieldName = "_bridgeAndroidJavaObject";
+
         CodeCompileUnit targetUnit;
         CodeTypeDeclaration targetClass;
 
@@ -20,6 +22,9 @@ namespace BridgeGenerator.Editor
             var bridge = new AndroidBridgeClassGenerator();
             var path = Application.dataPath + "/Generated/" + OutputFileName;
             Debug.Log(path);
+
+            bridge.AddFields();
+            bridge.AddConstructor();
             bridge.GenerateCSharpCode(path);
             AssetDatabase.Refresh();
         }
@@ -28,14 +33,32 @@ namespace BridgeGenerator.Editor
         {
             targetUnit = new CodeCompileUnit();
             var codeNamespace = new CodeNamespace("GeneratedBridge");
-            codeNamespace.Imports.Add(new CodeNamespaceImport("Google.Developers"));
+            codeNamespace.Imports.Add(new CodeNamespaceImport("UnityEngine"));
 
             targetClass = new CodeTypeDeclaration("UnityAndroidBridge");
             targetClass.IsClass = true;
             targetClass.TypeAttributes = System.Reflection.TypeAttributes.Public | System.Reflection.TypeAttributes.Sealed;
-            targetClass.BaseTypes.Add(typeof(JavaObjWrapper));
             codeNamespace.Types.Add(targetClass);
             targetUnit.Namespaces.Add(codeNamespace);
+        }
+
+        public void AddFields()
+        {
+            CodeMemberField androidJavaObjectField = new CodeMemberField();
+            androidJavaObjectField.Attributes = MemberAttributes.Private;
+            androidJavaObjectField.Name = AndroidJavaObjFieldName;
+            androidJavaObjectField.Type = new CodeTypeReference(typeof(AndroidJavaObject));
+            androidJavaObjectField.Comments.Add(new CodeCommentStatement("AndroidJavaObject representing the bridge"));
+
+            targetClass.Members.Add(androidJavaObjectField);
+        }
+
+        public void AddConstructor()
+        {
+            CodeConstructor constructor = new CodeConstructor();
+            constructor.Attributes = MemberAttributes.Public | MemberAttributes.Final;
+
+            targetClass.Members.Add(constructor);
         }
 
         public void GenerateCSharpCode(string fileName)

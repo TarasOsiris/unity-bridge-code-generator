@@ -10,10 +10,17 @@
 
 namespace GeneratedBridge
 {
-    using Google.Developers;
+    using UnityEngine;
     
     
-    public sealed class UnityAndroidBridge : JavaObjWrapper
+    public sealed class UnityAndroidBridge
     {
+        
+        // AndroidJavaObject representing the bridge
+        private UnityEngine.AndroidJavaObject _bridgeAndroidJavaObject;
+        
+        public UnityAndroidBridge()
+        {
+        }
     }
 }

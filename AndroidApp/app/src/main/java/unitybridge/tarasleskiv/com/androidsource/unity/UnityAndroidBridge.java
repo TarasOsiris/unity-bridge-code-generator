@@ -17,11 +17,11 @@ public final class UnityAndroidBridge {
 	}
 
 	@InvokedFromUnity
-	public static void setStringValue(String strValue) {
+	public void setStringValue(String strValue) {
 	}
 
 	@InvokedFromUnity
-	public static String getStringValue() {
+	public String getStringValue() {
 		return MOCK;
 	}
 }
