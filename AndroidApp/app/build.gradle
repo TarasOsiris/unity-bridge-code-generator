@@ -17,10 +17,23 @@ android {
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}
 	}
+
+	sourceSets {
+		main  {
+			java {
+				srcDir 'src/main/java'
+			}
+		}
+	}
 }
 
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 	testCompile 'junit:junit:4.12'
 	compile 'com.android.support:appcompat-v7:23.3.0'
+}
+
+
+task unityBridgeJar(type: Jar) {
+	from android.sourceSets.main.java.srcDirs
 }
