@@ -33,3 +33,5 @@ unity-source/obj
 .gradle
 .idea
 *.iml
+unity-bridge.jar
+unity-bridge.jar.meta

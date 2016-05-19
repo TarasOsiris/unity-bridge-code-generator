@@ -36,4 +36,5 @@ dependencies {
 
 task unityBridgeJar(type: Jar) {
 	from android.sourceSets.main.java.srcDirs
+	baseName "unity-bridge"
 }
