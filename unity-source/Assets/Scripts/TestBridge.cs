@@ -6,10 +6,9 @@ public class TestBridge : MonoBehaviour
     public void Click()
     {
 //        var bridge = new AndroidNativeBridgeWrapper();
-        using(AndroidJavaObject clazz = new AndroidJavaClass("unitybridge.tarasleskiv.com.unitybridge.UnityAndroidBridge"))
+        using(AndroidJavaObject clazz = new AndroidJavaClass("com.taras.leskiv.unitybridge.AwesomeBridge"))
         {
-            string x = clazz.CallStatic<string>("getStringValue");
-            Debug.Log(x);
+            Debug.Log(clazz.ToString());
         }
     }
 	

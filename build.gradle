@@ -41,7 +41,7 @@ task generateAndroidJar() << {
 
         try {
             BuildLauncher build = connection.newBuild();
-            build.forTasks("clean", "unityBridgeJar");
+            build.forTasks("clean", "jarUnityBridge-debug");
             build.addProgressListener(new ProgressListener() {
                 @Override
                 void statusChanged(ProgressEvent progressEvent) {

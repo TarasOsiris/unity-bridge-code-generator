@@ -10,6 +10,7 @@ android {
 		versionCode 1
 		versionName "1.0"
 	}
+
 	buildTypes {
 		release {
 			minifyEnabled false
@@ -21,15 +22,17 @@ android {
 		sourceCompatibility JavaVersion.VERSION_1_6
 		targetCompatibility JavaVersion.VERSION_1_6
 	}
+
+	libraryVariants.all { variant ->
+		def jarTask = project.tasks.create("jarUnityBridge-${variant.name}", Jar) {
+			dependsOn variant.javaCompile
+			baseName 'unity-bridge'
+			from variant.javaCompile.destinationDir
+		}
+	}
 }
 
 dependencies {
 	compile fileTree(include: ['*.jar'], dir: 'libs')
 	testCompile 'junit:junit:4.12'
-}
-
-
-task unityBridgeJar(type: Jar) {
-	from android.sourceSets.main.java.srcDirs
-	baseName "unity-bridge"
 }

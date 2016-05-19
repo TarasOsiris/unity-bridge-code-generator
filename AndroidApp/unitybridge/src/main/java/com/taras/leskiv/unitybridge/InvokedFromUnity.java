@@ -1,4 +1,4 @@
-package unitybridge.tarasleskiv.com.unitybridge;
+package com.taras.leskiv.unitybridge;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
