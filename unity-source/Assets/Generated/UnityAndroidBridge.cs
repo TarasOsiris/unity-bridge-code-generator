@@ -21,7 +21,7 @@ namespace GeneratedBridge
         
         public UnityAndroidBridge()
         {
-            this._bridgeAndroidJavaObject = new UnityEngine.AndroidJavaObject("unitybridge.tarasleskiv.com.androidsource.unity.UnityAndroidBridge");
+            this._bridgeAndroidJavaObject = new UnityEngine.AndroidJavaObject("com.taras.leskiv.unitybridge.UnityAndroidBridge");
         }
     }
 }

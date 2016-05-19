@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using GeneratedBridge;
+﻿using GeneratedBridge;
 
 public class AndroidNativeBridgeWrapper
 {
@@ -10,4 +8,6 @@ public class AndroidNativeBridgeWrapper
     {
         generatedBridge = new UnityAndroidBridge();
     }
+
+
 }

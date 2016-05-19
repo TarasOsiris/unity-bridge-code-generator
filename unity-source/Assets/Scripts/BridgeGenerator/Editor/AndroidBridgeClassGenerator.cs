@@ -14,7 +14,7 @@ namespace BridgeGenerator.Editor
         private const string AndroidJavaObjFieldName = "_bridgeAndroidJavaObject";
 
         // TODO To be passed from parsed java class
-        private const string BridgeJavaClassName = "unitybridge.tarasleskiv.com.androidsource.unity.UnityAndroidBridge";
+        private const string BridgeJavaClassName = "com.taras.leskiv.unitybridge.UnityAndroidBridge";
 
         CodeCompileUnit targetUnit;
         CodeTypeDeclaration targetClass;
