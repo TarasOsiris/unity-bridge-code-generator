@@ -22,7 +22,7 @@ project.ext {
     unityDir = "${System.env.UNITY_HOME}/Unity"
 
     androidProjDir = "${rootDir}/AndroidApp"
-    androidLibsDir = "${androidProjDir}/app/build/libs"
+    androidLibsDir = "${androidProjDir}/unitybridge/build/libs"
 
     unityProjDir = "${rootDir}/unity-source"
     unityAndroidPluginsDir = "${unityProjDir}/Assets/Plugins/Android"
@@ -41,7 +41,7 @@ task generateAndroidJar() << {
 
         try {
             BuildLauncher build = connection.newBuild();
-            build.forTasks("unityBridgeJar");
+            build.forTasks("clean", "unityBridgeJar");
             build.addProgressListener(new ProgressListener() {
                 @Override
                 void statusChanged(ProgressEvent progressEvent) {
