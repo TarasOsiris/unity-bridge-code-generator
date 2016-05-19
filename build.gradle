@@ -1,5 +1,8 @@
 import org.gradle.tooling.GradleConnector
 import org.gradle.tooling.ProjectConnection
+import org.gradle.tooling.BuildLauncher
+import org.gradle.tooling.events.ProgressListener
+import org.gradle.tooling.events.ProgressEvent
 
 apply plugin: 'java'
 
@@ -27,6 +30,20 @@ task generateAndroidJar() << {
     ProjectConnection connection = GradleConnector.newConnector()
         .forProjectDirectory(new File(project.androidProjDir))
         .connect();
+
+        try {
+            BuildLauncher build = connection.newBuild();
+            build.forTasks("unityBridgeJar");
+            build.addProgressListener(new ProgressListener() {
+                @Override
+                void statusChanged(ProgressEvent progressEvent) {
+                    logger.lifecycle("$progressEvent")
+                }
+            });
+            build.run();
+        } finally {
+            connection.close();
+        }
 }
 
 task parseJavaBridgeFile(type:JavaExec) {
