@@ -2,7 +2,7 @@ package com.taras.leskiv.unitybridge;
 
 import android.util.Log;
 
-@UnityBridge(fullClassName = "test")
+@UnityBridge(fullClassName = "com.taras.leskiv.unitybridge.UnityAndroidBridge")
 public class UnityAndroidBridge {
 	private static final String TAG = UnityAndroidBridge.class.getSimpleName();
 
@@ -20,6 +20,16 @@ public class UnityAndroidBridge {
 	@InvokedFromUnity
 	public String getStringValue() {
 		return MOCK;
+	}
+
+	@InvokedFromUnity
+	public String[] getStringArrayValue() {
+		return new String[]{"x", "y", "z"};
+	}
+
+	@InvokedFromUnity
+	public int getIntValue() {
+		return 0;
 	}
 	// endregion
 }
